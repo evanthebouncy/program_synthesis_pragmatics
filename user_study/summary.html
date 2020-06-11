@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+    <head>
+        <title>summary</title>
+        <link rel="stylesheet" href="index.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script
+  src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"
+  integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw="
+  crossorigin="anonymous"></script>
+
+
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
+        <script src="fire.js"></script>
+
+
+        <script src="summary.js"></script>
+        <script src="batch_count.js"></script>
+    </head>
+    <body>
+        <!-- goodbye and exist survey -->
+        <div id="exit_survey">
+
+            <h1 style="margin-left: 20%; margin-right : 20%; text-align: center;">
+                Survey
+            </h1>
+
+            <h3 style="margin-left: 20%; margin-right : 20%; text-align: center;">
+                Thanks you very much for participating in this user study. <br>
+                Please take some time to answer the following survey questions.
+            </h3>
+
+            <h3 style="margin-left: 20%; margin-right : 20%; text-align: center;">
+                What is your age?
+            </h3>
+            <!-- Q1 -->
+            <div style="display: flex;
+              align-items: center;
+              justify-content: center;">
+                  <input type="range" min="18" max="100" value="30" class="slider" id="age_range" style="width:30%;">
+                  <p>Age: <span id="qage">30</span></p>
+            </div>
+
+            <!-- Q2 -->
+            <h3 style="margin-left: 20%; margin-right : 20%; text-align: center;">
+                What is your gender?
+            </h3>
+            <div style="display: flex;
+              align-items: center;
+              justify-content: center;">
+                <form action="">
+                  <input type="radio" name="qgender" value="male"> male<br>
+                  <input type="radio" name="qgender" value="female"> female<br>
+                  <input type="radio" name="qgender" value="other"> other<br>
+                </form>
+            </div>
+
+            <!-- Q3 -->
+            <h3 style="margin-left: 20%; margin-right : 20%; text-align: center;">
+                Which robot was EASIER to communicate with?
+            </h3>
+            <div style="display: flex;
+              align-items: center;
+              justify-content: center;">
+                <form action="">
+                  <input type="radio" name="qrobot" value="white"> WHITE robot easier <br>
+                  <input type="radio" name="qrobot" value="blue"> BLUE robot easier <br>
+                  <input type="radio" name="qrobot" value="either"> either way <br>
+                </form>
+            </div>
+
+            <!-- Q4 -->
+            <h3 style="margin-left: 20%; margin-right : 20%; text-align: center;">
+                Briefly describe your strategy in communicating with the WHITE robot
+            </h3>
+            <div style="display: flex;
+              align-items: center;
+              justify-content: center;">
+                <textarea id="white_strat" rows="10" cols="50"></textarea>
+            </div>
+
+            <!-- Q4 -->
+            <h3 style="margin-left: 20%; margin-right : 20%; text-align: center;">
+                Briefly describe your strategy in communicating with the BLUE robot
+            </h3>
+            <div style="display: flex;
+              align-items: center;
+              justify-content: center;">
+                <textarea id="blue_strat" rows="10" cols="50"></textarea>
+            </div>
+
+            <br><br>
+
+            <div style="margin-left: 20%; margin-right : 20%;   display: flex;
+                  align-items: center;
+                  justify-content: center;">
+                <button id="submit_and_check" style="font-size: 20px;">Submit</button>
+            </div>        
+
+        </div>
+
+        <div id="result" style="display:none;">
+            <h1 style="margin-left: 20%; margin-right : 20%; text-align: center;">
+                Results
+            </h1>
+
+            <h3 id="result_white" style="margin-left: 20%; margin-right : 20%; text-align: center;">
+            </h3>
+
+            <h3 id="result_blue" style="margin-left: 20%; margin-right : 20%; text-align: center;">
+            </h3>
+
+            <h3 id="result_code" style="margin-left: 20%; margin-right : 20%; text-align: center;">
+            </h3>
+
+            <h3 style="margin-left: 20%; margin-right : 20%; text-align: center;"> 
+                Thank you for participating !
+            </h3>
+            <div style="display: flex;
+              align-items: center;
+              justify-content: center;">
+                <img src="assets/all_robots.png" alt="Two Robots" width="200" style="center;">
+            </div>
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Experiment</title>
+        <!--
+        <link rel="stylesheet" href="index.css">
+        -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
+
+        <script src="fire.js"></script>
+        
+        <script src="batch_count.js"></script>
+        <script src="index.js"></script>
+    </head>
+    <body>
+
+        <!-- The Consent Form -->
+        <div id="page1" style="display:unset;">
+            <div>
+                <h1><center> welcome to our study! </center></h1>
+
+                <h3><center> IMPORTANT! This study can ONLY run on a desktop/laptop </center><h3>
+
+                <p style="margin-left: 20%; margin-right : 20%; text-align: center; line-height: 2.0; "> 
+                In this study you will communicate with robots using symbols <br>
+
+                Please try to use as few symbols as possible <br>
+
+                In the end of the session we will ask you a few unrelated demographic questions <br>
+
+                The study is expected to take 20 minutes <br>
+
+                Thanks for participating! <br>
+                </p>
+                <div style="margin-left: 30%; margin-right : 30%; text-align: justify; font-size: small;">
+                Informed Consent
+                By answering the following questions, you are participating in a study performed by [redacted]. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personal identifying information about you. By clicking 'I AGREE' you indicate your consent to participate in this study.
+                </div>
+            </div>
+            <div style="margin-left: 20%; margin-right : 20%;   display: flex;
+                  align-items: center;
+                  justify-content: center;">
+                <button id="agree" style="font-size: 20px;">I AGREE </button>
+            </div>
+        </div>
+
+        <!-- The Instruction -->
+        <div id="task_description" style="display:none">
+            <h1><center> Instructions </center></h1>
+            
+            <h3 style="margin-left: 20%; margin-right : 20%; text-align: center;"> 
+                Two robots: the WHITE robot and the BLUE robot, have visited us from outer space. They are excited to communicate with us.
+            </h3>
+            <div style="display: flex;
+              align-items: center;
+              justify-content: center;">
+                <img src="assets/all_robots.png" alt="Two Robots" width="200" style="center;">
+            </div>
+
+            <h3 style="margin-left: 20%; margin-right : 20%; text-align: center;"> 
+                The robots think differently, but both communicate by building 7x7 grid patterns. For example:
+            </h3>
+            <div style="display: flex;
+              align-items: center;
+              justify-content: center;">
+                <img src="assets/example_patterns.png" alt="Three Example Patterns" width="900" style="center;">
+            </div>
+
+            <h3 style="margin-left: 20%; margin-right : 20%; text-align: center;">
+                Your task is to get robots to guess these patterns, by showing them an incomplete grid.
+            </h3>
+            <div style="display: flex;
+              align-items: center;
+              justify-content: center;">
+                <img src="assets/comm_task.png" alt="Communication Task" width="700" style="center;">
+            </div>
+            
+            <h3 style="margin-left: 20%; margin-right : 20%; text-align: center;">
+                Pick a symbol, its color, and place it on your grid. If you make a mistake, click on the symbol again to remove it.
+            </h3>
+            <div style="display: flex;
+              align-items: center;
+              justify-content: center;">
+                <img src="assets/place_ex.png" alt="Three Colors" width="600" style="center;">
+            </div>
+
+            <h3 style="margin-left: 20%; margin-right : 20%; text-align: center;">
+                There are 3 symbols: chicken, pig, and pebble. There are 3 colors: red, green, and blue. Pebbles are always white.
+            </h3>
+            <div style="display: flex;
+              align-items: center;
+              justify-content: center;">
+                <img src="assets/all_shapes.png" alt="Three Symbols" width="240" style="center;">
+            </div>
+            <div style="display: flex;
+              align-items: center;
+              justify-content: center;">
+                <img src="assets/all_colors.png" alt="Three Colors" width="240" style="center;">
+            </div>
+
+            <h3 style="margin-left: 20%; margin-right : 20%; text-align: center;">
+              Every time you add a new symbol, the robots will try to guess the complete pattern based the symbols so far. <br>
+            </h3>
+            <div style="display: flex;
+              align-items: center;
+              justify-content: center;">
+                <img src="assets/task_cycle.png" alt="task cycle" width="900" style="center;">
+            </div>
+
+            <h3 style="margin-left: 20%; margin-right : 20%; text-align: center;">
+              Your task is to help a robot guess your pattern, while using as few symbols as possible. 
+            </h3>
+
+            <!-- QUIZ Button -->
+            <h3 style="margin-left: 20%; margin-right : 20%; text-align: center;"> 
+                Next we will ask a few questions to check your understanding of the instructions
+            </h3>
+            <div style="margin-left: 20%; margin-right : 20%;   display: flex;
+                  align-items: center;
+                  justify-content: center;">
+                <button id="go_quiz" style="font-size: 20px;"> Start Quiz </button>
+            </div>
+        </div>
+
+
+        <!-- The Quiz -->
+        <div id="quiz_page" style="display:none">
+
+            <!-- Q1 -->
+            <h3 style="margin-left: 20%; margin-right : 20%; text-align: center;">
+                In this study my task is to:
+            </h3>
+            <div style="display: flex;
+              align-items: center;
+              justify-content: center;">
+                <form action="">
+                  <input type="radio" name="exptask" value="fastest"> Put lots of symbols on the grid as fast as possible <br>
+                  <input type="radio" name="exptask" value="other"> Systematically replicate my pattern by filling all locations on my grid <br>
+                  <input type="radio" name="exptask" value="fewest"> Choose a few strategically placed symbols to guide the robot's guess <br>                 
+                  <input type="radio" name="exptask" value="random"> Place the symbols at random to try my luck with the robots <br>
+                </form>
+            </div>
+
+            <!-- Q2 -->
+            <h3 style="margin-left: 20%; margin-right : 20%; text-align: center;">
+                How many symbols should I use to communicate my pattern:
+            </h3>
+            <div style="display: flex;
+              align-items: center;
+              justify-content: center;">
+                <form action="">
+                  <input type="radio" name="howmany" value="nomatter"> It does not matter <br>
+                  <input type="radio" name="howmany" value="fewer"> The fewer the better <br>
+                  <input type="radio" name="howmany" value="more"> The more the better <br>
+                  <input type="radio" name="howmany" value="49"> Exactly 49 symbols <br>
+                </form>
+            </div>
+
+            <!-- Q2 -->
+            <h3 style="margin-left: 20%; margin-right : 20%; text-align: center;">
+                The robots communicate by:
+            </h3>
+            <div style="display: flex;
+              align-items: center;
+              justify-content: center;">
+                <form action="">
+                  <input type="radio" name="robcomm" value="copy"> They try to copy my grid, but make random mistakes <br>
+                  <input type="radio" name="robcomm" value="guess"> They try to guess my pattern based on the symbols they have seen <br>
+                  <input type="radio" name="robcomm" value="noans"> The instructions did not specify this <br>
+                  <input type="radio" name="robcomm" value="morse"> They send Morse code over short-frequencey radio waves <br>
+                </form>
+            </div>
+
+            <br>
+            <br>
+
+            <div style="margin-left: 20%; margin-right : 20%;   display: flex;
+                  align-items: center;
+                  justify-content: center;">
+                <button id="check_answer" style="font-size: 20px;">Check Answers and Start Practice</button>
+            </div>
+
+        </div>
+
+        <!--
+        <div>
+            <a style="margin-left: 20%; margin-right : 20%; text-align: justify;" id="start">S T A R T</a>
+        </div>
+        -->
+    </body>
+</html>

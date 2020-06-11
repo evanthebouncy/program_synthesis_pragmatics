@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Robot Brief</title>
+        <link rel="stylesheet" href="index.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </head>
+
+    <body>
+            
+        <h1 id = "robot_text" style="margin-left: 20%; margin-right : 20%; text-align: center;">
+        </h1>
+
+        <div style="display: flex;
+              align-items: center;
+              justify-content: center;">
+            <img id="robot_pix" width="240" style="center;">
+        </div>
+        
+        <!-- first time show this -->
+        <div id="first_time_show" style="display:unset;">
+            <h3 id = "robot_text" style="margin-left: 20%; margin-right : 20%; text-align: center;">
+                Remember, the robots think differently. Find out how to communicate with this robot using as few symbols as possible. <br>
+                You will be communicating 10 patterns. After a pattern is correctly guessed, click on the yellow arrow to advance. 
+            </h3>
+
+            <h3 id = "robot_text" style="margin-left: 20%; margin-right : 20%; text-align: center;">
+                At the end of the experiment, we'll show how you did compared to other participants.
+            </h3>
+        </div>
+
+        <!-- second time show this 
+            <div id="second_time_show" style="display:none;">
+                <h3 id = "robot_text" style="margin-left: 20%; margin-right : 20%; text-align: center;">
+                    This robot guesses DIFFERENTLY than the first robot. Please try to communicate with as few symbols as possible.
+                </h3>
+            </div>
+        -->
+
+         <div style="display: flex;
+              align-items: center;
+              justify-content: center;">
+            <button id="lets_go" style="font-size: 20px;">Let's Go!</button>
+        </div>
+<script>
+$(document).ready(function(){
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    let user_id =   parseInt(urlParams.get('user_id'));
+    let trial_id =   parseInt(urlParams.get('trial_id'));
+    let robot_id =  urlParams.get('robot_order').split(',').map(x => parseInt(x))[trial_id];
+    console.log(`user id ${user_id}, robot id ${robot_id} trial id ${trial_id}`);
+    $("#lets_go").click(function () {
+        window.location = `problem.html${queryString}`;
+    });
+
+
+    // if (trial_id == 1) {
+    //     console.log("what ");
+    //     $("#first_time_show").css("display", "none");
+    //     $("#second_time_show").css("display", "unset");
+    // }
+
+    if (robot_id == 0) {
+        $("#robot_text").html(`You are now communicating with the WHITE robot`);
+        $('#robot_pix').attr("src", 'assets/robot_0.png');
+        } else {
+        $("#robot_text").html(`You are now communicating with the BLUE robot`);
+        $('#robot_pix').attr("src", 'assets/robot.png');
+    }
+});
+</script>
+
+    </body>
+</html>
+
