@@ -112,7 +112,7 @@ function make_target(){
 
     var box = document.createElement("div"); 
     box.id = "target_text";
-    box.innerHTML = "target";
+    box.innerHTML = "target grid (click to refresh)";
     box.className = "box text";
     box.style.top = "" + OFFSETTEXTTOP + "vmin";
     box.style.left = "" + 10 + "vmin";
@@ -142,7 +142,7 @@ function make_candidates(){
         // candidate text
         var box = document.createElement("div"); 
         box.id = "candidate_text_" + cand;
-        box.innerHTML = cand == 0 ? "robot 1 thinks this " : "robot 2 thinks this";
+        box.innerHTML = cand == 0 ? "non-pragmatic robot " : "pragmatic robot";
         box.className = "box text small";
         box.style.top = "" + (OFFSETTOP - 2.3 + WW_SMOL * cand * 8) + "vmin";
         box.style.left = "" + (OFFSET4 + 0.1) + "vmin";
@@ -232,7 +232,7 @@ function make_working_grid(){
     // working area text
     var box = document.createElement("div"); 
     box.id = "working_text";
-    box.innerHTML = "working area";
+    box.innerHTML = "show examples to robots here";
     box.className = "box text";
     box.style.top = "" + OFFSETTEXTTOP + "vmin";
     box.style.left = "" + OFFSET2 + "vmin";

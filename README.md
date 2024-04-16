@@ -3,7 +3,7 @@
 ## to start
 the best way to start is to actually play the robot game. the task is to get the robots to guess the pattern (target) on the left by building a subset of the pattern in the middle (working area). you can click on the target pattern to sample a new pattern. 
 
-simply visit : https://evanthebouncy.github.io/projects/grids/
+simply visit : https://evanthebouncy.github.io/program_synthesis_pragmatics/interactive_mode/
 
 if you want to run a local version, open ``/interactive_mode/index.html`` in your favorite browser. 
 
