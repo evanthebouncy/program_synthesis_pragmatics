@@ -28,6 +28,10 @@ var examples = {};
 var all_examples = [];
 var all_robot_times = [];
 
+// symbol count used on each solved pattern this trial, carried forward to the
+// next page via the URL (see make_next_button) so summary.html can show it
+var trial_symbol_counts = [];
+
 var start_time = 0;
 
 var user_id;
@@ -177,15 +181,11 @@ function make_next_button() {
 
         problem_id += 1;
         if (target_ids.length == problem_id) {
-            if (trial_id == 0) {
-                const queryString = window.location.search;
-                const queryStringNew = queryString.replace("trial_id=0","trial_id=1");
-                window.location = `robot_brief.html${queryStringNew}`
-            }
-            if (trial_id == 1) {
-                const queryString = window.location.search;
-                window.location = `summary.html${queryString}`
-            }
+            // carry this trial's symbol counts forward on the URL itself, and
+            // show the "how well you did" page for this robot before moving on
+            const symbols_param = `trial${trial_id}_symbols=${trial_symbol_counts.join(',')}`;
+            const queryString = window.location.search;
+            window.location = `how_well.html${queryString}&${symbols_param}`
         }
         else {
             new_problem(target_ids[problem_id], robot_id);
@@ -276,29 +276,7 @@ function render_l_results(l_candidates, cand_id){
         $("#candidate_highlight_"+cand_id).css("border-width", "5px");
         console.log("solved");
 
-        // register to firebase
-        let ref_loc = `${experiment_batch}/${user_id}/data/robot_${robot_id}_problem_${problem_id}`;
-        console.log(ref_loc);
-        // var ref = fbase.ref(ref_loc).push();
-        var ref = fbase.ref(ref_loc);
-        console.log(ref);
-        let to_put = {
-            'trial_id' : trial_id,
-            'problem_id' : problem_id,
-            'target_id' : target_ids[problem_id],
-            'robot_id'  : robot_id,
-            'start_time' : start_time,
-            'total_time' : new Date().getTime() - start_time,
-            'examples'  : examples,
-            'all_examples' : all_examples,
-            'all_robot_times' : all_robot_times,
-            'examples_used' : Object.keys(examples).length,
-            'disambiguous_size' : disambiguous_size,
-        }
-        ref.once("value", function(snapshot) {
-            ref.set(to_put);
-        });
-
+        trial_symbol_counts.push(Object.keys(examples).length);
 
         make_next_button();
 

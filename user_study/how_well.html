@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+    <head>
+        <title>How well you did</title>
+        <link rel="stylesheet" href="index.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </head>
+
+    <body>
+
+        <h1 style="margin-left: 20%; margin-right : 20%; text-align: center;">
+            How well you did
+        </h1>
+
+        <h3 id="robot_text" style="margin-left: 20%; margin-right : 20%; text-align: center;">
+        </h3>
+
+        <div style="display: flex;
+              align-items: center;
+              justify-content: center;">
+            <img id="robot_pix" width="200" style="center;">
+        </div>
+
+        <h3 id="result_text" style="margin-left: 20%; margin-right : 20%; text-align: center;">
+        </h3>
+
+        <div style="margin-left: 20%; margin-right : 20%;   display: flex;
+              align-items: center;
+              justify-content: center;">
+            <button id="continue" style="font-size: 20px;">Continue</button>
+        </div>
+
+<script>
+// canned overall averages from the actual study (no live data source anymore)
+const overall_white = 7.5;
+const overall_blue = 4.5;
+
+$(document).ready(function(){
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const trial_id = parseInt(urlParams.get('trial_id'));
+    const robot_order = urlParams.get('robot_order').split(',').map(x => parseInt(x));
+    const robot_id = robot_order[trial_id];
+
+    const symbols = (urlParams.get(`trial${trial_id}_symbols`) || '').split(',').filter(x => x !== '').map(Number);
+    const user_avg = symbols.length ? symbols.reduce((a, b) => a + b, 0) / symbols.length : 0;
+    const overall_avg = robot_id == 0 ? overall_white : overall_blue;
+    const robot_name = robot_id == 0 ? "WHITE" : "BLUE";
+
+    $("#robot_text").html(`You just finished communicating with the ${robot_name} robot`);
+    $('#robot_pix').attr("src", robot_id == 0 ? 'assets/robot_0.png' : 'assets/robot.png');
+
+    $("#result_text").html(`You used [${symbols.join(', ')}] symbols, with an average of ${user_avg.toFixed(2)}. The participant average for this robot is ${overall_avg} symbols.`);
+
+    $("#continue").click(function () {
+        if (trial_id == 0) {
+            const queryStringNew = queryString.replace("trial_id=0", "trial_id=1");
+            window.location = `robot_brief.html${queryStringNew}`;
+        } else {
+            window.location = `summary.html${queryString}`;
+        }
+    });
+});
+</script>
+
+    </body>
+</html>
